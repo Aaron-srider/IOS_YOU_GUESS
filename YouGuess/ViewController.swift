@@ -8,32 +8,14 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    lazy var scoreLabel: UILabel = {
         
-        view.backgroundColor = .white
-        
-        var title = UILabel()
-        
-        title.text = "YOU GUESS"
-        
-        title.font = UIFont.systemFont(ofSize: 22)
-        
-        title.backgroundColor = .gray
-       
-        view.addSubview(title)
-        
-        title.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        
-        
-        var score = UILabel()
+        let score = UILabel()
         
         score.text = "YOUR SCORE: 87"
         
-        score.backgroundColor = .blue
+        score.textAlignment = .center
         
         score.font = UIFont.systemFont(ofSize: 22)
        
@@ -41,53 +23,64 @@ class ViewController: UIViewController {
         
         score.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
-        
-        
+        return score
+    }()
+    
+    lazy var questionLabel: UILabel = {
         var question = UILabel()
         
         question.text = "question: xxxxxxxxxxxxxxxxx"
         
-        question.backgroundColor = .green
+        question.textAlignment = .center
         
-        question.font = UIFont.systemFont(ofSize: 22)
+        question.numberOfLines = 0
+    
+        question.font = UIFont.systemFont(ofSize: 30)
        
         view.addSubview(question)
         
         question.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
-        //Stack View
-        let stackView   = UIStackView()
-        stackView.axis  = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.spacing   = 16.0
-        
-        
-        
-        var correct = UIButton(type: .custom)
-      
-        
-        correct.setTitle("正确", for: .normal)
-      
-        correct.backgroundColor = .green
-        
-        correct.addTarget(self, action:#selector(self.press_correct), for: .touchUpInside)
-       
-        correct.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-//        correct.topAnchor.constraint(equalTo: question.bottomAnchor, constant: 10).isActive = true
-//
-//        correct.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 10).isActive = true
-
+        return question
+    }()
     
+    lazy var btnGroupStack: UIStackView = {
+        let btnGroupStack   = UIStackView()
+        btnGroupStack.axis  = NSLayoutConstraint.Axis.horizontal
+        btnGroupStack.distribution  = UIStackView.Distribution.fillEqually
+        btnGroupStack.alignment = UIStackView.Alignment.center
+        btnGroupStack.spacing   = 16.0
+//        btnGroupStack.backgroundColor = .gray
         
-
-
+        btnGroupStack.addArrangedSubview(correctBtn)
+        btnGroupStack.addArrangedSubview(uncorrectBtn)
+        
+        btnGroupStack.translatesAutoresizingMaskIntoConstraints = false
+      
+        view.addSubview(btnGroupStack)
+        
+        return btnGroupStack
+    }()
+    
+    lazy var correctBtn: UIButton = {
+        
+          var correct = UIButton(type: .custom)
+          
+          correct.setTitle("正确", for: .normal)
+          
+          correct.backgroundColor = .green
+        
+          correct.addTarget(self, action:#selector(self.press_correct), for: .touchUpInside)
+         
+          correct.translatesAutoresizingMaskIntoConstraints = false
+        
+        return correct
+          
+    }()
+    
+    lazy var uncorrectBtn: UIButton = {
+        
+         
         var uncorrect = UIButton(type: .custom)
         
         uncorrect.setTitle("错误", for: .normal)
@@ -98,72 +91,44 @@ class ViewController: UIViewController {
        
         uncorrect.translatesAutoresizingMaskIntoConstraints = false
         
-//        uncorrect.topAnchor.constraint(equalTo: correct.bottomAnchor, constant: 10).isActive = true
-//
-//        uncorrect.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 10).isActive = true
+        return uncorrect
+          
+    }()
+    
+
+    lazy var progress_bar: UIView = {
         
-        
-        
-        //Stack View
-        let btnGroupStack   = UIStackView()
-        btnGroupStack.axis  = NSLayoutConstraint.Axis.horizontal
-        btnGroupStack.distribution  = UIStackView.Distribution.fillEqually
-        btnGroupStack.alignment = UIStackView.Alignment.center
-        btnGroupStack.spacing   = 16.0
-        btnGroupStack.backgroundColor = .gray
-        
-        
-        btnGroupStack.addArrangedSubview(correct)
-        btnGroupStack.addArrangedSubview(uncorrect)
-        
-        btnGroupStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        view.addSubview(btnGroupStack)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+         
         var progress_bar = UIView()
 
         progress_bar.backgroundColor = .yellow
         
         progress_bar.translatesAutoresizingMaskIntoConstraints = false;
         
-        progress_bar.widthAnchor.constraint(equalToConstant:  view.frame.width*2/13 ).isActive = true
-       
-        progress_bar.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-       
-        
-        
-        
-        
-        
+      
+        return progress_bar
+          
+    }()
+    
+    
+    lazy var progress_text: UILabel = {
+   
         var progress_text = UILabel()
         
-        progress_text.text = "1/13"
+        progress_text.text = "-/-"
         
         progress_text.font = UIFont.systemFont(ofSize: 16)
         
         progress_text.backgroundColor = .white
 
         progress_text.translatesAutoresizingMaskIntoConstraints = false
+        return progress_text
+          
+    }()
+    
+    
+    lazy var progress_stack: UIStackView = {
         
-        
-        
-        
-        
-        //Stack View
         let progress_stack   = UIStackView()
         progress_stack.axis  = NSLayoutConstraint.Axis.vertical
         progress_stack.distribution  = UIStackView.Distribution.fill
@@ -174,63 +139,218 @@ class ViewController: UIViewController {
         
         progress_stack.addArrangedSubview(progress_text)
         progress_stack.addArrangedSubview(progress_bar)
-   
+
         
         progress_stack.translatesAutoresizingMaskIntoConstraints = false
         
         
         view.addSubview(progress_stack)
         
-        progress_stack.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        return progress_stack
+          
+    }()
+
+
+    override func viewDidLoad() {
         
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+//        let req = URLRequest(url: URL(string: "https://api.qimai.cn/rank/indexPlus/brand_id/0?analysis=dUcXR1deWx9ZXlRVG2dfQBcXV0RRXlRvWVQfU3cQBFYNBQQJAwIFCQUFIxQC")!)
+//
+//        URLSession.shared.dataTask(with: req, completionHandler: {
+//            [weak self] data, resp, _ in
+//            guard let self = self else { return }
+//
+//            let dataToString = String(describing: String.init(data: data!, encoding: .utf8))
+//
+//            print(dataToString)
+//
+//            DispatchQueue.main.async {
+//                self.scoreLabel.text = dataToString
+//                print("hello1")
+//            }
+//
+//            DispatchQueue.main.async {
+//                self.scoreLabel.text = dataToString
+//                print("hello2")
+//            }
+//
+//
+//        }).resume()
+        
+        initConstraints()
+        
+        scoreLabel.text = "Your Score: 0"
+        
+        
+        questionLabel.text = questions[0].text
+        
+        progress_text.text = "1/\(questions.count)"
+    }
+    
+    var cons:NSLayoutConstraint?
+    
+    func initConstraints() {
+        cons = progress_bar.widthAnchor.constraint(equalToConstant:  view.frame.width*1/CGFloat(questions.count))
+        cons?.isActive = true
+        
+        progress_bar.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+
+        progress_stack.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         progress_stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         
+ 
+        scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        scoreLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75).isActive = true
         
+        questionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        questionLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9).isActive = true
         
-        
-        title.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        score.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        question.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         btnGroupStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        btnGroupStack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75).isActive = true
         
+    
+        scoreLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        scoreLabel.bottomAnchor.constraint(equalTo: questionLabel.topAnchor, constant: -10).isActive = true
         
-        
-        title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        title.bottomAnchor.constraint(equalTo: score.topAnchor, constant: -10).isActive = true
-        
-        score.bottomAnchor.constraint(equalTo: question.topAnchor, constant: -10).isActive = true
-        
-        question.bottomAnchor.constraint(equalTo: btnGroupStack.topAnchor, constant: -10).isActive = true
+        questionLabel.bottomAnchor.constraint(equalTo: btnGroupStack.topAnchor, constant: -10).isActive = true
         
         btnGroupStack.bottomAnchor.constraint(equalTo: progress_stack.topAnchor, constant: -10).isActive = true
         
+        btnGroupStack.heightAnchor.constraint(equalTo: questionLabel.heightAnchor).isActive = true
         
-        btnGroupStack.heightAnchor.constraint(equalTo: question.heightAnchor).isActive = true
-        
-        question.heightAnchor.constraint(equalTo: score.heightAnchor).isActive = true
-        
-        score.heightAnchor.constraint(equalTo: title.heightAnchor).isActive = true
-
-
-
-        // Do any additional setup after loading the view.
+        questionLabel.heightAnchor.constraint(equalTo: scoreLabel.heightAnchor).isActive = true
+    }
+ 
+    var score:Int
+    
+    var current_question_index:Int
+    
+    var right_count: Int
+    
+    init() {
+        self.score = 0
+        self.current_question_index = 0
+        self.right_count = 0
+        super.init(nibName: nil, bundle:nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     
     @objc func press_correct(sender: UIButton!) {
-        var alertView = UIAlertView();
-        alertView.addButton(withTitle: "Ok");
-        alertView.title = "title";
-        alertView.message = "correct";
-        alertView.show();
+        
+    
+        if(questions[current_question_index].answer) {
+            right_count += 1
+            score = right_count*100 / questions.count
+        } else {
+            score = right_count / questions.count * 100
+        }
+        
+        scoreLabel.text = "Your Score: \(score)"
+        
+        current_question_index += 1
+        if(current_question_index == questions.count) {
+            
+            questionLabel.text = "问题已完成"
+            
+            var viewConstroller = UIAlertController(title: "游戏结束", message: "您的最终得分：\(score)", preferredStyle: .alert)
+//            viewConstroller.view.backgroundColor = .yellow
+           
+            viewConstroller.addAction(UIAlertAction(title: "重新开始", style: .default, handler: {
+                [self] _ in
+
+                
+                score = 0
+                current_question_index = 0
+                right_count = 0
+                scoreLabel.text = "Your Score: 0"
+                questionLabel.text = questions[0].text
+                
+                progress_text.text = "1/\(questions.count)"
+                
+                cons?.constant = view.frame.width * 1 / CGFloat(questions.count)
+           
+                
+            }))
+            
+            viewConstroller.addAction(UIAlertAction(title: "重新开始", style: .default, handler: {
+                _ in
+
+                exit(1)
+           
+                
+            }))
+            
+            self.present(viewConstroller, animated: true, completion: {
+                
+            })
+            return
+        
+        }
+        
+        questionLabel.text = questions[current_question_index].text
+        
+        progress_text.text = "\(current_question_index + 1)/\(questions.count)"
+    
+        cons?.constant = view.frame.width*CGFloat(current_question_index + 1)/CGFloat(questions.count)
+        
     }
     
     @objc func press_uncorrect(sender: UIButton!) {
-        var alertView = UIAlertView();
-        alertView.addButton(withTitle: "Ok");
-        alertView.title = "title";
-        alertView.message = "uncorrect";
-        alertView.show();
+        if(questions[current_question_index].answer == false) {
+            right_count += 1
+            score = right_count*100 / questions.count
+        } else {
+            score = right_count*100 / questions.count
+        }
+        
+        scoreLabel.text = "Your Score: \(score)"
+        
+        current_question_index += 1
+        
+        if(current_question_index == questions.count) {
+            
+            questionLabel.text = "问题已完成"
+            
+            var viewConstroller = UIAlertController(title: "游戏结束", message: "您的最终得分：\(score)", preferredStyle: .alert)
+//            viewConstroller.view.backgroundColor = .yellow
+           
+            viewConstroller.addAction(UIAlertAction(title: "重新开始", style: .default, handler: {
+                [self] _ in
+
+                
+                score = 0
+                current_question_index = 0
+                right_count = 0
+                scoreLabel.text = "Your Score: 0"
+                questionLabel.text = questions[0].text
+                
+                progress_text.text = "1/\(questions.count)"
+                
+                cons?.constant = view.frame.width * 1 / CGFloat(questions.count)
+           
+                
+            }))
+            
+            self.present(viewConstroller, animated: true, completion: {
+                
+            })
+            return
+        
+        }
+        
+        questionLabel.text = questions[current_question_index].text
+        
+        progress_text.text = "\(current_question_index + 1)/\(questions.count)"
+    
+        cons?.constant = view.frame.width*CGFloat(current_question_index + 1)/CGFloat(questions.count)
     }
 
 

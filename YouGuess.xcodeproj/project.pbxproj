@@ -14,6 +14,7 @@
 		C0B88B6A2771A45700DF0E4C /* YouGuessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B88B692771A45700DF0E4C /* YouGuessTests.swift */; };
 		C0B88B742771A45700DF0E4C /* YouGuessUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B88B732771A45700DF0E4C /* YouGuessUITests.swift */; };
 		C0B88B762771A45700DF0E4C /* YouGuessUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B88B752771A45700DF0E4C /* YouGuessUITestsLaunchTests.swift */; };
+		C0D5026B2772F7BE007686B4 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D5026A2772F7BE007686B4 /* Question.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		C0B88B6F2771A45700DF0E4C /* YouGuessUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouGuessUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B88B732771A45700DF0E4C /* YouGuessUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouGuessUITests.swift; sourceTree = "<group>"; };
 		C0B88B752771A45700DF0E4C /* YouGuessUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouGuessUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C0D5026A2772F7BE007686B4 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				C0B88B5B2771A45700DF0E4C /* Assets.xcassets */,
 				C0B88B5D2771A45700DF0E4C /* LaunchScreen.storyboard */,
 				C0B88B602771A45700DF0E4C /* Info.plist */,
+				C0D5026A2772F7BE007686B4 /* Question.swift */,
 			);
 			path = YouGuess;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0D5026B2772F7BE007686B4 /* Question.swift in Sources */,
 				C0B88B572771A45600DF0E4C /* ViewController.swift in Sources */,
 				C0B88B532771A45600DF0E4C /* AppDelegate.swift in Sources */,
 			);
